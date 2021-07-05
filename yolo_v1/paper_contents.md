@@ -224,6 +224,42 @@ VOC 2012 테스트 세트에서 YOLO는 57.9% mAP를 기록했습니다.
 
 # 4.5. Generalizability: Person Detection in Artwork
 
+object detection를 위한 학술 데이터 세트는 동일한 분포에서 훈련 및 테스트 데이터를 가져옵니다. 실제 애플리케이션에서는 가능한 모든 사용 사례를 예측하기가 어렵고 테스트 데이터는 시스템이 이전에 본 것과 다를 수 있습니다 [3]. 우리는 YOLO를 Picasso Dataset [12]과 People-Art Dataset [3]의 다른 감지 시스템과 비교합니다.   
+   
+그림 5는 YOLO와 다른 탐지 방법 간의 비교 성능을 보여줍니다. 참고로 모든 모델이 VOC 2007 데이터로만 훈련된 사람에게 VOC 2007 감지 AP를 제공합니다. Picasso에서 모델은 VOC 2012에서 교육을 받고 People-Art에서는 VOC 2010에서 교육을 받습니다.   
+   
+R-CNN은 VOC 2007에서 높은 AP를 가지고 있습니다. 그러나 R-CNN은 아트웍에 적용될 때 상당히 떨어집니다. R-CNN은 자연 이미지에 맞게 조정된 bounding box 제안을 위해 선택적 검색을 사용합니다. R-CNN의 classifier 단계는 작은 지역 만보고 좋은 제안이 필요합니다.   
+   
+DPM은 아트웍에 적용될 때 AP를 잘 유지합니다.   
+   
+이전 작업에서는 DPM이 개체의 모양과 레이아웃에 대한 강력한 공간 모델을 가지고 있기 때문에 성능이 좋다는 이론을 세웠습니다.   
+   
+DPM은 R-CNN 만큼 저하되지 않지만 더 낮은 AP에서 시작됩니다.   
+   
+YOLO는 VOC 2007에서 좋은 성능을 가지고 있으며 아트웍에 적용될 때 AP가 다른 방법보다 덜 저하됩니다.   
+   
+DPM과 마찬가지로 YOLO는 개체의 크기와 모양은 물론 개체 간의 관계와 개체가 일반적으로 나타나는 위치를 모델링 합니다. 아트 워크와 자연 이미지는 픽셀 수준에서 매우 다르지만 물체의 크기와 모양이 비슷하기 때문에 YOLO는 여전히 좋은 bounding box와 탐지를 예측할 수 있습니다. 
+
+# 5. Real-Time Detection In The Wild
+
+YOLO는 빠르고 정확한 object detection 기로 컴퓨터 비전 애플리케이션에 이상적입니다. YOLO를 웹캠에 연결하고 카메라에서 이미지를 가져오고 탐지를 표시하는 시간을 포함하여 실시간 성능을 유지하는지 확인합니다.   
+   
+결과 시스템은 상호 작용하고 매력적입니다. YOLO는 이미지를 개별적으로 처리하지만 웹캠에 연결하면 추적 시스템처럼 작동하여 물체가 움직이고 모양이 변할 때이를 감지합니다. 시스템 데모와 소스 코드는 프로젝트 웹 사이트 http://pjreddie.com/yolo/ 에서 찾을 수 있습니다.
+
+![image](https://user-images.githubusercontent.com/63130907/124415247-6b963500-dd8f-11eb-83e4-1759e72e90d9.png)
+
+![image](https://user-images.githubusercontent.com/63130907/124415287-84064f80-dd8f-11eb-9cd2-f34c52745137.png)
+
+# 6. Conclusion
+
+object detection를 위한 통합 모델 YOLO를 소개합니다. 우리의 모델은 구성이 간단하고 전체 이미지에서 직접 학습할 수 있습니다. classifier 기반 접근 방식과 달리 YOLO는 탐지 성능에 직접적으로 해당하는 loss function에 대해 훈련되고 전체 모델은 공동으로 훈련됩니다.   
+   
+Fast YOLO는 문헌에서 가장 빠른 범용 물체 탐지기이며 YOLO는 실시간 물체 탐지에서 최첨단 기술을 추진합니다. YOLO는 또한 새로운 도메인으로 잘 일반화되어 빠르고 강력한 object detection에 의존하는 애플리케이션에 이상적입니다.   
+   
+감사의 말 : 이 작업은 ONR N00014-13-1-0720, NSF IIS-1338054 및 The Allen Distinguished Investigator Award에 의해 부분적으로 지원됩니다. 
+
+
+
 
 
 
