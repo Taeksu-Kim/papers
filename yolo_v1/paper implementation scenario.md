@@ -37,7 +37,7 @@ kernel size가 2 이상인데도 padding 값을 주지 않으면 크기는 kerne
 convolution layer에서는 이미지의 크기를 인자 값으로 주지는 않음.   
 
 각 covolution layer에는 batch_norm과 LeakyReLU가 적용되므로 편의를 위해 Convolution layer 블럭으로 class를 별도 정의.   
-nn.Module를 상속 받은 후에 forward에서 leaykrelu(batch_norm(convolution(x))) 형태로 전개   
+nn.Module를 상속 받은 후에 forward에서 leakyrelu(batch_norm(convolution(x))) 형태로 전개   
 
 convolution2d 블럭(in_channels, out_channels, kernel_size, stride, padding)   
 maxpooling(kerneal_size, stride)   
