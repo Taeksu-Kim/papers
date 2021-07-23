@@ -2,7 +2,8 @@
 https://github.com/aladdinpersson/Machine-Learning-Collection/tree/master/ML/Pytorch/object_detection/YOLO   
 https://github.com/shkim960520/YOLO-v1-for-studying   
 https://github.com/motokimura/yolo_v1_pytorch   
-
+https://ballentain.tistory.com/12   
+https://ctkim.tistory.com/79
 
 # basic data information
 
@@ -93,8 +94,7 @@ Learning rate schedule 구현 코드가 궁금한 사람은 https://github.com/m
 batch_size에 관해서도 사용하는 GPU의 메모리에 한계가 있어 16정도로 줄여서 사용할 예정.
 
 # IOU
-참고 자료 https://ballentain.tistory.com/12   
-   
+
 ![image](https://user-images.githubusercontent.com/63130907/124529728-23861980-de46-11eb-88e4-04410a5a222b.png)
 
 ![image](https://user-images.githubusercontent.com/63130907/124529737-27b23700-de46-11eb-9ff5-8abc81333413.png)
@@ -129,4 +129,18 @@ NMS는 간단하게 생각하면 객체가 있을 확률값이 기준 조건보�
 98개의 바운딩 박스 list에서 객체 존재 확률이 threshold 이상은 박스들만 남겨두고, 객체 존재 확률로 내림차순 sort를 하고, 확률이 가장 높은 박스부터 pop으로 뽑아내며 해당 박스와 클래스가 같지 않거나, 해당 박스와의 IOU값이 threshold보다 작은 박스만 다시 후보군으로 남겨둔다. 앞에서 POP으로 추출한 확률이 가장 높은 바운딩 박스를 NMS list에 추가해준다. 이러한 작업을 반복해서 작업하면 결국 NMS list에는 각각의 객체들에 대해 중복되지 않고 확률값이 제일 높은 바운딩 박스만 남게 된다.
 
 # mAP
+
+일반적으로 성능 평가 지표는 Confusion matrix를 통한 recall과 precision을 자주 사용하지만, Object detection 분야에서는 좀 더 입체적인 평가를 위해서 이 두 기준을 같이 사용한 AP(Average Precision)를 사용하는 경우가 많다. recall을 x축, precision을 y축으로 하는 그래프를 그려보면 아래와 같이 반비례를 하는 그래프가 나온다.   
+   
+recall이 높다(객체 인식 threshold값이 낮다) ->  precision이 낮다(threshold값이 낮은 만큼 더 많은 FP가 생성될 확률이 높아진다)   
+recall이 낮다(객체 인식 threshold값이 높다) ->  precision이 높다(threshold값이 높은 만큼 더 많은 FP가 생성될 확률이 낮아진다)
+
+
+![image](https://user-images.githubusercontent.com/63130907/126727317-375b151b-a6fc-4005-9976-5f66113d742c.png)
+
+위의 그래프를 숫자값 하나로 표현한 것이 AP이다. 위의 그래프에서 선 아래쪽의 면적을 계산하는 방식이다. 그리고 AP는 한 클래스에 대한 recall, presicion 그래프를 통해 구해지는 값이기 때문에 각 클래스별로 이 값들을 더 더하고, 나눠준 값이 mAP이다. mAP는 Object detection 분야에서 일반적으로 사용하는 성능평가지표이다.
+
+mAP를 구하기 위해서,
+각 클래스별 recall, precision 값들을 구하고, 이를 적분(torch.trapz)을 이용해서 AP 값들을 구하고, AP 값들을 다 더해준 후 해당 클래스들 숫자로 나눠줌으로 mAP를 구할 수 있다.
+
 
